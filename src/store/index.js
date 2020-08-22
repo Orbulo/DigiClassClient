@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import actions from './actions';
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default function (/* { ssrContext } */) {
     state: {
       currentClassroomId: null,
       classrooms: [],
+      students: {},
       token: '',
     },
     getters: {
@@ -24,16 +26,8 @@ export default function (/* { ssrContext } */) {
         return state.classrooms.filter((classroom) => id === classroom.id)[0];
       }
     },
-    mutations: {
-      ADD_CLASSROOM(state, classroom) {
-        state.classrooms.push(classroom);
-      },
-    },
-    actions: {
-      async addClassroom({ commit }, { code, name }) {
-        commit('ADD_CLASSROOM', { code, name });
-      },
-    }
+    mutations: ,
+    actions,
   })
 }
 
