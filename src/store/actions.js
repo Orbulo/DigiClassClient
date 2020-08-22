@@ -1,11 +1,15 @@
-import axios from 'axios';
+import axiosInstance from '../axios';
 
 const actions = {
-  async setToken({ commit }, token) {
+  setToken({ commit }, token) {
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     commit('SET_TOKEN', token);
   },
-  async addClassroom({commit}, {code, name}) {
-    commit('ADD_CLASSROOM', {code, name});
+  setClassrooms({ commit }, classrooms) {
+    commit('SET_CLASSROOMS', classrooms);
+  },
+  addClassroom({commit}, {id, code, name}) {
+    commit('ADD_CLASSROOM', {id, code, name});
   },
   async socketStudentJoined({ studentId }) {
     await axios.get(`classroom/${classroomId}/`)

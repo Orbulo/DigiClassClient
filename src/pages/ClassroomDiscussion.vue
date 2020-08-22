@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { send } from "@quasar/extras/material-icons";
 export default {
   name: "ClassroomChat",
   data: () => ({
@@ -32,7 +31,6 @@ export default {
     newMessage: ""
   }),
   created() {
-    this.$axios.get("");
   }
 };
 </script>

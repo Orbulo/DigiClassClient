@@ -1,8 +1,13 @@
 import { LocalStorage } from 'quasar';
+import {mapActions} from 'vuex';
 
 export default {
+  methods: {
+    ...mapActions(['setToken']),
+  },
   async created() {
     const token = LocalStorage.getItem('token');
+    this.setToken(token);
     if (!token) {
       // TODO: Redirect user to login/register screen
       const {data} = await this.$axios.post('auth/register', {

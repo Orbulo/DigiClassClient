@@ -20,7 +20,9 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
       'aws-amplify',
-      'axios'
+      'axios',
+      'vue-socketio',
+      'load-script',
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
