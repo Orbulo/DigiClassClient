@@ -31,23 +31,38 @@
 
         <q-dialog v-model='isCreateClassroomDialogVisible'>
           <q-card class='column items-stretch q-pa-md'>
-            <div class='text-h4 q-mb-md'>Create Classroom</div>
-            <q-input
-              outlined
-              placeholder="Mr. Xu's Biology Class"
-              v-model='classroomName'
-              class='q-mb-md'
-            />
-            <q-input
-              outlined
-              placeholder='BIO3D7'
-              v-model='courseCode'
-            />
-            <q-btn
-              class='q-mx-auto q-mt-md'
-              label='Create Classroom'
-              @click='createClassroom'
-            />
+            <q-tab-panels>
+              <q-tab-panel name='join'>
+                <div class='text-h4 q-mb-md'>Create Classroom</div>
+                <q-input
+                  outlined
+                  placeholder="Mr. Xu's Biology Class"
+                  v-model='classroomName'
+                  class='q-mb-md'
+                />
+                <q-input
+                  outlined
+                  placeholder='BIO3D7'
+                  v-model='courseCode'
+                />
+                <q-btn
+                  class='q-mx-auto q-mt-md'
+                  label='Create Classroom'
+                  @click='createClassroom'
+                />
+              </q-tab-panel>
+              <q-tab-panel name='create'>
+                <div class='text-h4 q-mb-md'>Join Classroom</div>
+                <q-input
+                  label='Class ID'
+                  outlined
+                  v-model='classId'
+                  bottom-slots
+                  error-message='Class ID not found.'
+                  :error='joinClassError'
+                />
+              </q-tab-panel>
+            </q-tab-panels>
           </q-card>
         </q-dialog>
       </q-page>
@@ -64,6 +79,7 @@ export default {
     isCreateClassroomDialogVisible: false,
     classroomName: '',
     courseCode: '',
+    joinClassError: false,
   }),
   async created() {
     const { data } = await this.$axios.get('classrooms');
@@ -90,6 +106,8 @@ export default {
         name: this.classroomName
       });
       this.isCreateClassroomDialogVisible = false;
+    },
+    async joinClassroom() {
     }
   }
 }
