@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import actions from './actions';
+import mutations from './mutations';
 
 Vue.use(Vuex)
 
@@ -26,7 +27,7 @@ export default function (/* { ssrContext } */) {
         return state.classrooms.filter((classroom) => id === classroom.id)[0];
       }
     },
-    mutations: ,
+    mutations,
     actions,
   })
 }

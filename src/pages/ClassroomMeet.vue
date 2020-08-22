@@ -1,5 +1,11 @@
 <template>
-  <p>WebRTC Stuff goes here :)</p>
+  <q-layout>
+    <q-page-container>
+      <q-page>
+        <p>WebRTC Stuff goes here :)</p>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
