@@ -24,22 +24,29 @@
             <img src="https://cdn.quasar.dev/img/mountains.jpg" />
             <q-card-section>
               <div class='text-h6'>{{ classroom.name }}</div>
-              <div class='text-subtitle2'>{{ classroom.code }}</div>
+              <div class='text-subtitle2'>{{ classroom.courseCode }}</div>
             </q-card-section>
           </q-card>
         </div>
 
         <q-dialog v-model='isCreateClassroomDialogVisible'>
-          <q-card class='items-center q-pa-md'>
-            <div class='text-h4'>Create Classroom</div>
+          <q-card class='column items-stretch q-pa-md'>
+            <div class='text-h4 q-mb-md'>Create Classroom</div>
             <q-input
               outlined
               placeholder="Mr. Xu's Biology Class"
               v-model='classroomName'
+              class='q-mb-md'
             />
             <q-input
+              outlined
               placeholder='BIO3D7'
               v-model='courseCode'
+            />
+            <q-btn
+              class='q-mx-auto q-mt-md'
+              label='Create Classroom'
+              @click='createClassroom'
             />
           </q-card>
         </q-dialog>
@@ -49,30 +56,21 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'ClassroomList',
   data: () => ({
     isCreateClassroomDialogVisible: false,
     classroomName: '',
-    classroomCode: '',
-    classrooms: [
-      {
-        id: 0,
-        code: 'ENG3D7',
-        name: 'Grade 11 English',
-      },
-      {
-        id: 1,
-        code: 'FSF3D7',
-        name: 'Grade 11 French',
-      }
-    ]
+    courseCode: '',
   }),
   async created() {
     const { data } = await this.$axios.get('classrooms');
     this.setClassrooms(data);
+  },
+  computed: {
+    ...mapState(['classrooms']),
   },
   methods: {
     ...mapActions(['addClassroom', 'setClassrooms']),
@@ -80,16 +78,17 @@ export default {
       const { data } = await this.$axios.get(`classrooms/${id}`);
       console.log(data);
     },
-    async addClassroom() {
+    async createClassroom() {
       const { data } = await this.$axios.post('classrooms', {
-        code: this.classroomCode,
+        courseCode: this.courseCode,
         name: this.classroomName,
       });
       await this.addClassroom({
         id: data.classroomId,
-        code: this.classroomCode,
+        courseCode: this.courseCode,
         name: this.classroomName
       });
+      this.isCreateClassroomDialogVisible = false;
     }
   }
 }
