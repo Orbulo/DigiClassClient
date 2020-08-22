@@ -19,7 +19,7 @@ export default {
     await this.$loadScript('https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js');
 
     const peer = new window.Peer(undefined, {
-      host: '/',
+      host: `${process.env.VUE_APP_SERVER_URL}/peer`,
       port: '5000'
     });
 

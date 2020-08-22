@@ -20,6 +20,10 @@ const routes = [
         path: 'questions',
         component: () => import('../pages/ClassroomQuestions.vue'),
       },
+      {
+        path: 'question/:questionId',
+        component: () => import('../pages/ClassroomQuestion.vue');
+      }
     ]
   },
   {
