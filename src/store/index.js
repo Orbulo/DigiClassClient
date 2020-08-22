@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-// import example from './module-example'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 Vue.use(Vuex)
 
@@ -15,15 +13,25 @@ Vue.use(Vuex)
  */
 
 export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      // example
+  return new Vuex.Store({
+    state: {
+      currentClassroomId: null,
+      classrooms: [],
     },
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
+    getters: {
+      currentClassroom: state => id => {
+        return state.classrooms.filter((classroom) => id === classroom.id)[0];
+      }
+    },
+    mutations: {
+      ADD_CLASSROOM(state, classroom) {
+        state.classrooms.push(classroom);
+      },
+    },
+    actions: {
+      async addClassroom({ commit }, { code, name }) {
+        commit('ADD_CLASSROOM', { code, name });
+      }
+    }
   })
-
-  return Store
 }
