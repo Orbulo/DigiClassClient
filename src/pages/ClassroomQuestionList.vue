@@ -14,7 +14,7 @@ export default {
     AppQuestion
   },
   computed: {
-    ...mapState(['currentClassroomId'])
+    ...mapState(["currentClassroomId"])
   },
   created() {
     const classroomId = this.currentClassroomId;
