@@ -4,10 +4,9 @@
 
 <script>
 export default {
-  name: 'ClassroomQuestion'
-}
+  name: "ClassroomQuestion",
+  components: {}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
