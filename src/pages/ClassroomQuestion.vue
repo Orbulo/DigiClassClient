@@ -1,11 +1,20 @@
 <template>
-  <div></div>
+  <div>
+    <AppQuestion />
+    <NewAnswer />
+  </div>
 </template>
 
 <script>
+import AppQuestion from "../components/AppQuestion";
+import NewAnswer from "../components/NewAnswer";
+
 export default {
-  name: "ClassroomQuestion",
-  components: {}
+  name: "ClassroomQuestionList",
+  components: {
+    AppQuestion,
+    NewAnswer
+  }
 };
 </script>
 

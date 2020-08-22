@@ -6,6 +6,7 @@
 
 <script>
 import AppQuestion from "../components/AppQuestion";
+
 export default {
   name: "ClassroomQuestionList",
   components: {
