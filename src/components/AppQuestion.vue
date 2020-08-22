@@ -7,9 +7,10 @@
         </template>
         <q-field borderless id="votes" stack-label>
           <template v-slot:control>
-            <div class="self-center full-width no-outline" tabindex="0">
-              <p style="font-size: 15px; margin-bottom: 0px">{{ upvotes }}</p>
-              <p style="font-size: 10px; margin-bottom: 0px">upvotes</p>
+            <div class="self-center full-width text-center no-outline"
+                 tabindex="0">
+              <p style="font-size: 15px; margin-bottom: 0">{{ upvotes }}</p>
+              <p style="font-size: 10px; margin-bottom: 0">upvotes</p>
             </div>
           </template>
         </q-field>

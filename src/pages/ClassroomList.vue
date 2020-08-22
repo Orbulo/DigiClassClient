@@ -73,10 +73,11 @@ export default {
     ...mapState(['classrooms']),
   },
   methods: {
-    ...mapActions(['addClassroom', 'setClassrooms']),
+    ...mapActions(['addClassroom', 'setClassrooms', 'setCurrentClassroomId']),
     async enterClassroom(id) {
       const { data } = await this.$axios.get(`classrooms/${id}`);
-      console.log(data);
+      this.setCurrentClassroomId(id);
+      await this.$router.push('/discussion');
     },
     async createClassroom() {
       const { data } = await this.$axios.post('classrooms', {

@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          {{ currentClass }}
+          {{ currentClassroom.name }}
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -70,7 +70,7 @@ export default {
   name: 'MainLayout',
   components: { DrawerLink },
   created() {
-    this.$axios.get(`classroom/${this.currentClassroomId}`);
+    this.$axios.get(`classrooms/${this.currentClassroomId}`);
   },
   data () {
     return {
@@ -80,6 +80,7 @@ export default {
   },
   computed: {
     ...mapState(['currentClassroomId']),
+    ...mapGetters(['currentClassroom']),
   },
   sockets: {
     connect() {
