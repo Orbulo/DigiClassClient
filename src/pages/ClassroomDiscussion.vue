@@ -3,19 +3,18 @@
     <div style="width: 100%">
       <q-chat-message
         v-for="(message, index) in chatMessages"
-        name="me"
-        :text="['hey, how are you?']"
-        :sent='authorId === userId'
-        stamp="7 minutes ago"
+        :name="users[message.userId]"
+        :text="[message.content]"
+        :sent='message.userId === userId'
+        :key="index"
       />
-      <q-chat-message
-        name="Jane"
-        :text="[`doing fine, how r you?`]"
-        :stamp=""
-      />
-      <q-input filled v-model="newMessage" label="Enter a Message">
+      <q-input filled v-model="message" label="Enter a Message">
         <template v-slot:append>
-          <q-icon name="send" />
+          <q-btn
+            flat
+            icon='send'
+            @click='sendMessage'
+          />
         </template>
       </q-input>
     </div>
@@ -23,23 +22,32 @@
 </template>
 
 <script>
-import { format } from 'timeago.js';
-import { mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "ClassroomChat",
   data: () => ({
-    chatMessages: [],
-    newMessage: ""
+    message: ""
   }),
+  computed: {
+    ...mapState(['chatMessages', 'userId', 'currentClassroomId']),
+    ...mapGetters(['populatedQuestions']),
+  },
   methods: {
     ...mapActions(['addChatMessage']),
+    async sendMessage() {
+      await this.$axios.post(`classrooms/${this.currentClassroomId}/chat`, {
+        message: this.message,
+      });
+      this.message = '';
+    }
   },
   async created() {
-    const { data } = await this.$axios.get('classroom/chat');
-    data.forEach((chatMessage) => {
-      addChatMessage();
-    })
+    const { data } = await
+      this.$axios.get(`classrooms/${this.currentClassroomId}/chat`);
+    await Promise.all(data.map(async (chatMessage) => {
+      await this.addChatMessage(chatMessage);
+    }));
   }
 };
 </script>

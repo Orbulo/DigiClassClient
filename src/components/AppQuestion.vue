@@ -19,13 +19,17 @@
         <h6>{{ title }}</h6>
         <br />
         <p>{{ content }}</p>
-        <p id="author">Written by: {{ author }}</p>
+        <p id="author">
+          Written by: {{ user.name }} (Rep: {{ user.reputation }})
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: "AppQuestion",
   props: {
@@ -41,11 +45,17 @@ export default {
       type: String,
       required: true,
     },
-    author: {
+    userId: {
       type: String,
       required: true,
     }
   },
+  computed: {
+    ...mapState(['userMap']),
+    user() {
+      return this.userMap[this.userId];
+    }
+  }
 };
 </script>
 

@@ -19,16 +19,28 @@ export default new Vuex.Store({
     currentClassroomId: 0,
     classrooms: [],
     chatMessages: [],
+    questionAnswers: {},
     questions: [],
-    answers: [],
-    users: {},
+    userIds: [],
+    userMap: {},
     token: '',
     userId: '',
   },
   getters: {
     currentClassroom: state => id => {
       return state.classrooms.filter((classroom) => id === classroom.id)[0];
-    }
+    },
+    questionAnswers: state => questionId => {
+      return state.questionAnswers[questionId];
+    },
+    populatedQuestions: state => {
+      return state.questions.map((question) => {
+        return {
+          ...question,
+          user: state.userMap[question.userId],
+        };
+      });
+    },
   },
   mutations,
   actions,

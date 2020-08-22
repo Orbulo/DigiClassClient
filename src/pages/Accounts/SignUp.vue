@@ -2,7 +2,7 @@
   <q-card
     class='q-pa-md column items-center'
   >
-    <h3 class='text-weight-bold'>Login</h3>
+    <h3 class='text-weight-bold'>Register</h3>
     <q-form>
       <q-input
         label='Email'

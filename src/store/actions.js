@@ -21,15 +21,22 @@ const actions = {
     await dispatch('addChatMessage', { userId, message });
   },
   async addChatMessage({ commit, state, dispatch }, { userId, message }) {
-    await dispatch('addUser', userId);
+    await dispatch('populateUser', userId);
     commit('ADD_CHAT_MESSAGE', { userId, message });
   },
-  async addUser({ commit }, userId) {
-    if (!state.users[userId]) {
+  async populateUser({ state, commit }, userId) {
+    if (!state.userMap[userId]) {
       const { data: user } = await axiosInstance.get(`classrooms/${this.currentClassroomId}/user/${userId}`);
-      commit('ADD_USER', { userId, user });
+      commit('POPULATE_USER', { userId, user });
     }
   },
+  async addQuestion({ commit, dispatch }, question) {
+    await dispatch('populateUser', question.userId);
+    commit('ADD_QUESTION', question);
+  },
+  async addAnswer({ commit }, answer) {
+    commit('ADD_ANSWER', answer);
+  }
 };
 
 export default actions;
