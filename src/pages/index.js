@@ -9,16 +9,14 @@ export default {
   async created() {
     const token = LocalStorage.getItem('token');
     const userId = LocalStorage.getItem('userId');
-    this.setToken(token);
-    this.setUserId(userId);
     if (!token) {
       // TODO: Redirect user to login/register screen
       const {data} = await this.$axios.post('auth/register', {
         email: nanoid(),
         password: nanoid(),
       });
-      LocalStorage.set('token', data.token);
-      LocalStorage.set('userId', data.userId);
+      this.setToken(token);
+      this.setUserId(userId);
     }
     await this.$router.push('/classrooms');
   },
