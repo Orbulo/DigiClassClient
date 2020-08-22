@@ -5,6 +5,9 @@ const actions = {
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     commit('SET_TOKEN', token);
   },
+  setCurrentClassroomId({ commit }, classroomId) {
+    commit('SET_CURRENT_CLASSROOM_ID', classroomId);
+  },
   setClassrooms({ commit }, classrooms) {
     commit('SET_CLASSROOMS', classrooms);
   },
@@ -12,7 +15,7 @@ const actions = {
     commit('ADD_CLASSROOM', {id, code, name});
   },
   async socketStudentJoined({ studentId }) {
-    await axios.get(`classroom/${classroomId}/`)
+    await axios.get(`classrooms/${classroomId}/`)
   },
   async socketChatMessagePosted({ studentId, message }) {
 
