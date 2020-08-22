@@ -18,8 +18,12 @@ export default new Vuex.Store({
   state: {
     currentClassroomId: 0,
     classrooms: [],
-    students: {},
+    chatMessages: [],
+    questions: [],
+    answers: [],
+    users: {},
     token: '',
+    userId: '',
   },
   getters: {
     currentClassroom: state => id => {

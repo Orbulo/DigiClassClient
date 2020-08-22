@@ -31,7 +31,24 @@
 
         <q-dialog v-model='isCreateClassroomDialogVisible'>
           <q-card class='column items-stretch q-pa-md'>
-            <q-tab-panels>
+            <q-tab-panels v-model='currentPanel'>
+              <q-tab-panel name='create'>
+                <div class='text-h4 q-mb-md'>Join Classroom</div>
+                <q-input
+                  label='Classroom ID'
+                  outlined
+                  v-model='classroomId'
+                  bottom-slots
+                  @input='joinClassError = false'
+                  :error-message="`Classroom with ID ${classroomId} not found.`"
+                  :error='joinClassError'
+                />
+                <q-btn
+                  class='q-mx-auto q-mt-md'
+                  label='Join Classroom'
+                  @click='joinClassroom'
+                />
+              </q-tab-panel>
               <q-tab-panel name='join'>
                 <div class='text-h4 q-mb-md'>Create Classroom</div>
                 <q-input
@@ -49,22 +66,6 @@
                   class='q-mx-auto q-mt-md'
                   label='Create Classroom'
                   @click='createClassroom'
-                />
-              </q-tab-panel>
-              <q-tab-panel name='create'>
-                <div class='text-h4 q-mb-md'>Join Classroom</div>
-                <q-input
-                  label='Classroom ID'
-                  outlined
-                  v-model='classroomId'
-                  bottom-slots
-                  :error-message="`Classroom with ID ${classroomId} not found.`"
-                  :error='joinClassError'
-                />
-                <q-btn
-                  class='q-mx-auto q-mt-md'
-                  label='Join Classroom'
-                  @click='joinClassroom'
                 />
               </q-tab-panel>
             </q-tab-panels>
@@ -86,6 +87,7 @@ export default {
     classroomId: '',
     courseCode: '',
     joinClassError: false,
+    currentPanel: 'join',
   }),
   async created() {
     const { data } = await this.$axios.get('classrooms');
@@ -114,9 +116,14 @@ export default {
       this.isCreateClassroomDialogVisible = false;
     },
     async joinClassroom() {
-      const { data } = await this.$axios.post('classroom/join', {
-        classroomId: this.classroomId
-      })
+      try {
+        await this.$axios.post('classroom/join', {
+          classroomId: this.classroomId
+        });
+        await this.$router.push('/discussion');
+      } catch(e) {
+        this.joinClassError = true;
+      }
     }
   }
 }

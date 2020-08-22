@@ -4,11 +4,13 @@ import { nanoid } from 'nanoid';
 
 export default {
   methods: {
-    ...mapActions(['setToken']),
+    ...mapActions(['setToken', 'setUserId']),
   },
   async created() {
     const token = LocalStorage.getItem('token');
+    const userId = LocalStorage.getItem('userId');
     this.setToken(token);
+    this.setUserId(userId);
     if (!token) {
       // TODO: Redirect user to login/register screen
       const {data} = await this.$axios.post('auth/register', {
@@ -16,6 +18,7 @@ export default {
         password: nanoid(),
       });
       LocalStorage.set('token', data.token);
+      LocalStorage.set('userId', data.userId);
     }
     await this.$router.push('/classrooms');
   },
