@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'ClassroomQuestions'
+  name: 'ClassroomQuestionList'
 }
 </script>
 
