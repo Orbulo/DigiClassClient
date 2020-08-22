@@ -54,12 +54,17 @@
               <q-tab-panel name='create'>
                 <div class='text-h4 q-mb-md'>Join Classroom</div>
                 <q-input
-                  label='Class ID'
+                  label='Classroom ID'
                   outlined
-                  v-model='classId'
+                  v-model='classroomId'
                   bottom-slots
-                  error-message='Class ID not found.'
+                  :error-message="`Classroom with ID ${classroomId} not found.`"
                   :error='joinClassError'
+                />
+                <q-btn
+                  class='q-mx-auto q-mt-md'
+                  label='Join Classroom'
+                  @click='joinClassroom'
                 />
               </q-tab-panel>
             </q-tab-panels>
@@ -78,6 +83,7 @@ export default {
   data: () => ({
     isCreateClassroomDialogVisible: false,
     classroomName: '',
+    classroomId: '',
     courseCode: '',
     joinClassError: false,
   }),
@@ -108,6 +114,9 @@ export default {
       this.isCreateClassroomDialogVisible = false;
     },
     async joinClassroom() {
+      const { data } = await this.$axios.post('classroom/join', {
+        classroomId:
+      })
     }
   }
 }
