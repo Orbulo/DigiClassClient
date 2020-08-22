@@ -1,5 +1,8 @@
+import axiosInstance from '../axios';
+
 const actions = {
   setToken({ commit }, token) {
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     commit('SET_TOKEN', token);
   },
   setClassrooms({ commit }, classrooms) {

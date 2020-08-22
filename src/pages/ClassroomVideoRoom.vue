@@ -16,15 +16,12 @@ export default {
     peers: {}
   }),
   async created() {
-    await this.$loadScript('https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js');
-
-    const peer = new window.Peer(undefined, {
-      host: `${process.env.VUE_APP_SERVER_URL}/peer`,
-      port: '5000'
-    });
-
     const roomId = this.$route.params.roomId;
+    // If room doesn't exist, request will fail and peer will not be loaded
     const { data } = await this.$axios.get(`rooms/${roomId}`);
+
+    await this.$loadScript('https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js');
+    const peer = new window.Peer();
     this.roomName = data.name;
     this.roomCode = data.code;
     const myVideo = document.createElement('video')
@@ -54,7 +51,7 @@ export default {
     })
 
     peer.on('open', id => {
-      this.$socket.emit('join-room', this.$route.params.roomId, id)
+      this.$socket.emit('joinRoom', this.$route.params.roomId, id)
     })
   },
   methods: {
