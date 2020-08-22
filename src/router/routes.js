@@ -8,6 +8,10 @@ const routes = [
     ]
   },
   {
+    path: '/room/:roomId',
+    component: () => import('../pages/ClassroomVideoRoom.vue')
+  },
+  {
     path: '/classrooms',
     component: () => import('../pages/ClassroomList.vue')
   },
