@@ -18,11 +18,11 @@ const routes = [
       },
       {
         path: 'questions',
-        component: () => import('../pages/ClassroomQuestions.vue'),
+        component: () => import('../pages/ClassroomQuestionList.vue'),
       },
       {
         path: 'question/:questionId',
-        component: () => import('../pages/ClassroomQuestion.vue');
+        component: () => import('../pages/ClassroomQuestion.vue')
       }
     ]
   },
