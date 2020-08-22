@@ -9,7 +9,7 @@ const routes = [
     component: () => import('layouts/ClassroomLayout.vue'),
     children: [
       {
-        path: 'room/create',
+        path: 'room',
         component: () => import('../pages/ClassroomMeet.vue'),
       },
       {
