@@ -12,7 +12,7 @@ const routes = [
     component: () => import('../pages/ClassroomList.vue')
   },
   {
-    path: '/meet',
+    path: '/room/create',
     component: () => import('../pages/ClassroomMeet.vue'),
   },
   {
