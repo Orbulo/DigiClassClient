@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"digiclasseed7631e": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-digiclass-dev-223854-authRole",
+            "UnauthRoleArn": "arn:aws:iam::411641546291:role/amplify-digiclass-dev-223854-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::411641546291:role/amplify-digiclass-dev-223854-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-digiclass-dev-223854-deployment",
+            "UnauthRoleName": "amplify-digiclass-dev-223854-unauthRole",
+            "StackName": "amplify-digiclass-dev-223854",
+            "StackId": "arn:aws:cloudformation:us-east-1:411641546291:stack/amplify-digiclass-dev-223854/9f8bd810-e420-11ea-804c-0a2de5ab949d",
+            "AmplifyAppId": "d2jmxnus2vzoro"
+        },
+        "categories": {
+            "auth": {
+                "digiclasseed7631e": {}
+            }
+        }
+    }
+}
