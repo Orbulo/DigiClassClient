@@ -56,7 +56,6 @@ export default {
       })
 
       this.sockets.subscribe('userConnected', (userId) => {
-        console.log('meowhaosetnuhasnotuh');
         this.connectToNewUser(userId, stream)
       })
     } catch(e) {
