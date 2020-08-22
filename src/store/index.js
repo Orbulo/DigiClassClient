@@ -17,6 +17,7 @@ export default function (/* { ssrContext } */) {
     state: {
       currentClassroomId: null,
       classrooms: [],
+      token: '',
     },
     getters: {
       currentClassroom: state => id => {
@@ -31,7 +32,8 @@ export default function (/* { ssrContext } */) {
     actions: {
       async addClassroom({ commit }, { code, name }) {
         commit('ADD_CLASSROOM', { code, name });
-      }
+      },
     }
   })
 }
+
