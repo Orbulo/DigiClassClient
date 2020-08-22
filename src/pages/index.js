@@ -1,5 +1,6 @@
 import { LocalStorage } from 'quasar';
 import {mapActions} from 'vuex';
+import { nanoid } from 'nanoid';
 
 export default {
   methods: {
@@ -11,8 +12,8 @@ export default {
     if (!token) {
       // TODO: Redirect user to login/register screen
       const {data} = await this.$axios.post('auth/register', {
-        email: 'leonzalion@gmail.com',
-        password: 'vue'
+        email: nanoid(),
+        password: nanoid(),
       });
       LocalStorage.set('token', data.token);
     }
