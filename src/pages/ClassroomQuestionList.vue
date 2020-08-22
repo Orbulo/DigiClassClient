@@ -6,10 +6,7 @@
 
 <script>
 import AppQuestion from "../components/AppQuestion";
-<<<<<<< HEAD
-=======
 import { mapState } from 'vuex';
->>>>>>> 18ade55cfea2a1373d24162631d334f172c9e66a
 
 export default {
   name: "ClassroomQuestionList",
