@@ -10,13 +10,19 @@
         </template>
       </q-field>
       <div>
-        <q-btn label="Create Room" type="submit" color="primary" />
+        <q-btn
+          label="Create Room"
+          type="submit"
+          color="primary"
+        />
       </div>
     </q-form>
   </div>
 </template>
 
 <script>
+import { nanoid } from 'nanoid';
+
 export default {
   name: "ClassroomMeet",
   data() {
@@ -26,8 +32,13 @@ export default {
   },
 
   methods: {
-    createRoom() {
-      console.log("asdf");
+    async createRoom() {
+      const { data } = await this.$axios.post('rooms/create', {
+        name: this.roomName,
+      });
+      if (data.roomId) {
+        await this.$router.push(`/room/${data.roomId}`);
+      }
     }
   }
 };

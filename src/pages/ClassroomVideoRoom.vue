@@ -8,22 +8,25 @@
 </template>
 
 <script>
-import Peer from 'peerjs';
-
-const peer = new Peer(undefined, {
-  host: '/',
-  port: '5000'
-});
-
 export default {
   name: 'ClassroomVideoRoom',
   data: () => ({
+    roomName: '',
+    roomCode: '',
     peers: {}
   }),
-  sockets: {
-
-  },
   async created() {
+    await this.$loadScript('https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js');
+
+    const peer = new window.Peer(undefined, {
+      host: '/',
+      port: '5000'
+    });
+
+    const roomId = this.$route.params.roomId;
+    const { data } = await this.$axios.get(`rooms/${roomId}`);
+    this.roomName = data.name;
+    this.roomCode = data.code;
     const myVideo = document.createElement('video')
     myVideo.muted = true;
     //telling browser that mic and cam are needed
@@ -42,11 +45,11 @@ export default {
       })
     })
 
-    this.$socket.on('user-connected', (userId) => {
+    this.sockets.subscribe('userConnected', (userId) => {
       this.connectToNewUser(userId, stream)
     })
 
-    this.$socket.on('user-disconnected', (userId) => {
+    this.sockets.subscribe('userDisconnected', (userId) => {
       if (this.peers[userId]) this.peers[userId].close()//removes the stream of the person who left
     })
 

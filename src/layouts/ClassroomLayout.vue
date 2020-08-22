@@ -53,12 +53,17 @@ import DrawerLink from 'components/DrawerLink';
 const drawerLinks = [
   {
     title: 'Discussion',
+    icon: 'chat',
     route: '/discussion',
   },
   {
     title: 'Questions',
     route: '/questions',
   },
+  {
+    title: 'Room',
+    route: '/room/create',
+  }
 ];
 
 export default {
