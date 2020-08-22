@@ -59,10 +59,6 @@ const drawerLinks = [
     title: 'Questions',
     route: '/questions',
   },
-  {
-    title: 'Meet',
-    route: '/meet',
-  }
 ];
 
 export default {

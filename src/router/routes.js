@@ -13,6 +13,10 @@ const routes = [
         path: 'discussion',
         component: () => import('../pages/ClassroomDiscussion.vue'),
       },
+      {
+        path: 'questions',
+        component: () => import('../pages/ClassroomQuestions.vue'),
+      },
     ]
   },
   {
@@ -22,10 +26,6 @@ const routes = [
   {
     path: '/classrooms',
     component: () => import('../pages/ClassroomList.vue')
-  },
-  {
-    path: '/discussion',
-    component: () => import('../pages/ClassroomDiscussion.vue'),
   },
   {
     path: '/signup',
