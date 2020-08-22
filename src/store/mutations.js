@@ -2,6 +2,9 @@ const mutations = {
   SET_TOKEN(state, token) {
     state.token = token;
   },
+  SET_CLASSROOMS(state, classrooms) {
+    state.classrooms = classrooms;
+  },
   ADD_CLASSROOM(state, classroom) {
     state.classrooms.push(classroom);
   },

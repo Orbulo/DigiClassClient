@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'ClassroomList',
   data: () => ({
@@ -68,7 +70,12 @@ export default {
       }
     ]
   }),
+  async created() {
+    const { data } = await this.$axios.get('classrooms');
+    this.setClassrooms(data);
+  },
   methods: {
+    ...mapActions(['addClassroom', 'setClassrooms']),
     async enterClassroom(id) {
       const { data } = await this.$axios.get(`classrooms/${id}`);
       console.log(data);
@@ -78,8 +85,11 @@ export default {
         code: this.classroomCode,
         name: this.classroomName,
       });
-
-      data.classroomId;
+      await this.addClassroom({
+        id: data.classroomId,
+        code: this.classroomCode,
+        name: this.classroomName
+      });
     }
   }
 }
