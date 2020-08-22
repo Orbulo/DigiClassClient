@@ -6,10 +6,7 @@
 
 <script>
 import AppQuestion from "../components/AppQuestion";
-<<<<<<< HEAD
-=======
-import { mapState } from 'vuex';
->>>>>>> 18ade55cfea2a1373d24162631d334f172c9e66a
+import { mapState } from "vuex";
 
 export default {
   name: "ClassroomQuestionList",
@@ -17,7 +14,7 @@ export default {
     AppQuestion
   },
   computed: {
-    ...mapState(['currentClassroomId'])
+    ...mapState(["currentClassroomId"])
   },
   created() {
     const classroomId = this.currentClassroomId;
