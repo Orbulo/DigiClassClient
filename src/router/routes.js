@@ -8,6 +8,18 @@ const routes = [
     ]
   },
   {
+    path: '/classrooms',
+    component: () => import('../pages/ClassroomList.vue')
+  },
+  {
+    path: '/meet',
+    component: () => import('../pages/ClassroomMeet.vue'),
+  },
+  {
+    path: '/discussion',
+    component: () => import('../pages/ClassroomDiscussion.vue'),
+  },
+  {
     path: '/signup',
     name: 'SignUp',
     component: () => import('../pages/Accounts/SignUp.vue')
