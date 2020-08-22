@@ -4,7 +4,15 @@ const routes = [
     path: '/',
     component: () => import('layouts/ClassroomLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue') },
+      {
+        path: 'meet',
+        component: () => import('../pages/ClassroomMeet.vue'),
+      },
+      {
+        path: 'discussion',
+        component: () => import('../pages/ClassroomDiscussion.vue'),
+      },
     ]
   },
   {
@@ -14,14 +22,6 @@ const routes = [
   {
     path: '/classrooms',
     component: () => import('../pages/ClassroomList.vue')
-  },
-  {
-    path: '/meet',
-    component: () => import('../pages/ClassroomMeet.vue'),
-  },
-  {
-    path: '/discussion',
-    component: () => import('../pages/ClassroomDiscussion.vue'),
   },
   {
     path: '/signup',

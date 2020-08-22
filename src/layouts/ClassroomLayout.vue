@@ -32,8 +32,8 @@
         >
           Essential Links
         </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
+        <DrawerLink
+          v-for="link in drawerLinks"
           :key="link.title"
           v-bind="link"
         />
@@ -48,16 +48,33 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex';
+import DrawerLink from 'components/DrawerLink';
+
+const drawerLinks = [
+  {
+    title: 'Discussion',
+    route: '/discussion',
+  },
+  {
+    title: 'Questions',
+    route: '/questions',
+  },
+  {
+    title: 'Meet',
+    route: '/meet',
+  }
+];
 
 export default {
   name: 'MainLayout',
+  components: { DrawerLink },
   created() {
     this.$axios.get(`classroom/${this.currentClassroomId}`);
   },
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData
+      drawerLinks,
     }
   },
   computed: {

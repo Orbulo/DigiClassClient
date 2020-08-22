@@ -20,6 +20,9 @@ export default {
   data: () => ({
     peers: {}
   }),
+  sockets: {
+
+  },
   async created() {
     const myVideo = document.createElement('video')
     myVideo.muted = true;
@@ -39,11 +42,11 @@ export default {
       })
     })
 
-    this.sockets.subscribe('user-connected', (userId) => {
+    this.$socket.on('user-connected', (userId) => {
       this.connectToNewUser(userId, stream)
     })
 
-    this.sockets.subscribe('user-disconnected', (userId) => {
+    this.$socket.on('user-disconnected', (userId) => {
       if (this.peers[userId]) this.peers[userId].close()//removes the stream of the person who left
     })
 
