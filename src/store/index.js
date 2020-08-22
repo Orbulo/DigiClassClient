@@ -14,21 +14,19 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  return new Vuex.Store({
-    state: {
-      currentClassroomId: null,
-      classrooms: [],
-      students: {},
-      token: '',
-    },
-    getters: {
-      currentClassroom: state => id => {
-        return state.classrooms.filter((classroom) => id === classroom.id)[0];
-      }
-    },
-    mutations,
-    actions,
-  })
-}
+export default new Vuex.Store({
+  state: {
+    currentClassroomId: 0,
+    classrooms: [],
+    students: {},
+    token: '',
+  },
+  getters: {
+    currentClassroom: state => id => {
+      return state.classrooms.filter((classroom) => id === classroom.id)[0];
+    }
+  },
+  mutations,
+  actions,
+});
 

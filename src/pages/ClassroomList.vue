@@ -23,10 +23,12 @@ export default {
   data: () => ({
     classrooms: [
       {
+        id: 0,
         code: 'ENG3D7',
         name: 'Grade 11 English',
       },
       {
+        id: 1,
         code: 'FSF3D7',
         name: 'Grade 11 French',
       }

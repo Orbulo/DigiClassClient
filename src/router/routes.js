@@ -2,9 +2,12 @@
 const routes = [
   {
     path: '/',
+    component: () => import('pages/index.js')
+  },
+  {
+    path: '/',
     component: () => import('layouts/ClassroomLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
       {
         path: 'room/create',
         component: () => import('../pages/ClassroomMeet.vue'),
