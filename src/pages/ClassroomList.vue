@@ -115,7 +115,7 @@ export default {
     },
     async joinClassroom() {
       const { data } = await this.$axios.post('classroom/join', {
-        classroomId:
+        classroomId: this.classroomId
       })
     }
   }
