@@ -1,9 +1,19 @@
 <template>
-  <div
-    class='video-grid'
-    ref='videoGrid'
-  >
-
+  <div>
+    <h4 class='text-center text-weight-bold'>{{ roomName }}</h4>
+    <p class='text-subtitle2 text-center'>
+      Send the following link to friends for them to join: <br />
+      {{ roomUrl }}
+    </p>
+    <p>
+      Or tell them to paste the following ID in the Room ID input box on the
+      join room screen: <br />
+      {{ roomCode }}
+    </p>
+    <div
+      class='video-grid'
+      ref='videoGrid'
+    ></div>
   </div>
 </template>
 
@@ -17,6 +27,11 @@ export default {
     roomCode: '',
     peers: {}
   }),
+  computed: {
+    roomUrl() {
+      return `${process.env.VUE_APP_SERVER_URL}/room/${this.roomCode}`;
+    }
+  },
   async created() {
     const roomId = this.$route.params.roomId;
     // If room doesn't exist, request will fail and peer will not be loaded
