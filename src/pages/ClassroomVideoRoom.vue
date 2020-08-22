@@ -8,6 +8,8 @@
 </template>
 
 <script>
+let peer;
+
 export default {
   name: 'ClassroomVideoRoom',
   data: () => ({
@@ -21,11 +23,22 @@ export default {
     try {
       const {data} = await this.$axios.get(`rooms/${roomId}`);
       await this.$loadScript('https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js');
-      const peer = new window.Peer();
+      peer = new window.Peer();
+
+      this.sockets.subscribe('userDisconnected', (userId) => {
+        if (this.peers[userId]) this.peers[userId].close()//removes the stream of the person who left
+      })
+
+      peer.on('open', id => {
+        console.log('meow');
+        this.$socket.emit('joinRoom', roomId, id);
+      });
+
       this.roomName = data.name;
       this.roomCode = data.code;
       const myVideo = document.createElement('video')
       myVideo.muted = true;
+
       //telling browser that mic and cam are needed
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -43,15 +56,8 @@ export default {
       })
 
       this.sockets.subscribe('userConnected', (userId) => {
+        console.log('meowhaosetnuhasnotuh');
         this.connectToNewUser(userId, stream)
-      })
-
-      this.sockets.subscribe('userDisconnected', (userId) => {
-        if (this.peers[userId]) this.peers[userId].close()//removes the stream of the person who left
-      })
-
-      peer.on('open', id => {
-        this.$socket.emit('joinRoom', roomId, id)
       })
     } catch(e) {
       alert(`Room with id ${roomId} not found.`);
@@ -82,7 +88,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
