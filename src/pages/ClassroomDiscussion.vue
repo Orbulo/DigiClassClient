@@ -8,7 +8,12 @@
         :sent='chatMessage.userId === userId'
         :key="index"
       />
-      <q-input filled v-model="message" label="Enter a Message">
+      <q-input
+        filled
+        v-model="message"
+        label="Enter a Message"
+        @keydown.enter="sendMessage"
+      >
         <template v-slot:append>
           <q-btn
             flat
