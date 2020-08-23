@@ -3,6 +3,16 @@
     <h3 class="text-weight-bold">Register</h3>
     <q-card class='column items-center'>
       <q-input
+        label='Full Name'
+        class='q-mb-md q-card'
+        v-model='fullName'
+        outlined
+      >
+        <template v-slot:prepend>
+          <q-icon name='account_circle' />
+        </template>
+      </q-input>
+      <q-input
         label="Email"
         class="q-mb-md q-card"
         v-model="email"
@@ -41,14 +51,16 @@ export default {
   name: "SignUp",
   data() {
     return {
-      email: "",
-      password: ""
+      fullName: '',
+      email: '',
+      password: ''
     };
   },
   methods: {
     ...mapActions(['setToken', 'setUserId']),
     async onRegister() {
       const { data } = await this.$axios.post("auth/register", {
+        fullName: this.fullName,
         email: this.email,
         password: this.password
       });

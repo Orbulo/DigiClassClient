@@ -53,7 +53,7 @@
               :class="{ 'light-dimmed': !upvoted }"
               @click="upvote"
             />
-            <h7>{{ upvotes }}</h7>
+            <span>{{ currentUpvotes }}</span>
           </div>
           <q-separator />
 
@@ -77,21 +77,33 @@
 <script>
 export default {
   name: 'AppAnswer2',
+  props: {
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    upvotes: {
+      type: Number,
+      required: true,
+    }
+  },
   data() {
     return {
       upvoted: false,
-      upvotes: 1,
-      verified: true
+      currentUpvotes: 0,
     };
+  },
+  created() {
+    this.currentUpvotes = this.upvotes;
   },
   methods: {
     async upvote() {
       if (this.upvoted) {
         this.upvoted = false;
-        this.upvotes = this.upvotes - 1;
+        this.currentUpvotes = this.currentUpvotes - 1;
       } else {
         this.upvoted = true;
-        this.upvotes = this.upvotes + 1;
+        this.currentUpvotes = this.currentUpvotes + 1;
       }
     }
   }

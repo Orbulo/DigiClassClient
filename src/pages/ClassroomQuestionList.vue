@@ -1,30 +1,52 @@
 <template>
-  <div>
+  <div class='column items-center'>
     <q-btn
+      class='q-mt-md'
       label='Post a Question'
       @click='isPostQuestionDialogVisible = true'
     />
-    <AppQuestion
-      v-for="({ upvotes, title, content, userId, id }, index) in questions"
-      :id='id'
-      :upvotes="upvotes"
-      :title="title"
-      :content="content"
-      :userId="userId"
-      :key="index"
-    />
+    <div style='align-self: stretch'>
+      <AppQuestion2
+        v-for="({ upvotes, title, content, userId, id }, index) in questions"
+        :id='id'
+        :upvotes="upvotes"
+        :title="title"
+        :content="content"
+        :userId="userId"
+        :answered='false'
+        :verified='false'
+        :key="index"
+      />
+    </div>
     <q-dialog
       v-model='isPostQuestionDialogVisible'
     >
-      <q-card>
+      <q-card class='q-pa-md'>
         <q-input
+          outlined
           label='Question Title'
           v-model='questionTitle'
+          class='q-mb-md'
         />
-        <q-input
-          label='Question Details'
-          v-model='questionDetails'
+        <q-editor
+          v-model="questionDetails"
+          flat
           placeholder='Provide all the details needed for others to understand your question...'
+          content-class="bg-amber-3"
+          toolbar-text-color="white"
+          toolbar-toggle-color="yellow-8"
+          toolbar-bg="primary"
+          :toolbar="[
+        ['bold', 'italic', 'underline'],
+        [
+          {
+            label: $q.lang.editor.formatting,
+            icon: $q.iconSet.editor.formatting,
+            list: 'no-icons',
+            options: ['p', 'h3', 'h4', 'h5', 'h6']
+          }
+        ]
+      ]"
         />
         <q-btn
           label='Post Question'
@@ -36,13 +58,13 @@
 </template>
 
 <script>
-import AppQuestion from "../components/AppQuestion";
+import AppQuestion2 from "../components/AppQuestion2";
 import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "ClassroomQuestionList",
   components: {
-    AppQuestion
+    AppQuestion2
   },
   data: () => ({
     isPostQuestionDialogVisible: false,
