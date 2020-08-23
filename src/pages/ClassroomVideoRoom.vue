@@ -1,14 +1,16 @@
 <template>
   <div>
     <h4 class='text-center text-weight-bold'>{{ roomName }}</h4>
-    <p class='text-subtitle2 text-center'>
+    <div class='text-subtitle2 text-center'>
       Send the following link to friends for them to join: <br />
-      {{ roomUrl }}
-    </p>
-    <p>
-      Or tell them to paste the following ID in the Room ID input box on the
-      join room screen: <br />
-      {{ roomCode }}
+      <p class='text-weight-regular'>{{ roomUrl }}</p>
+    </div>
+    <p class='text-center'>
+      <span class='text-weight-bold'>
+        Or tell them to paste the following ID in the Room ID input box on the
+        join room screen:
+      </span><br />
+      {{ $route.params.roomId }}
     </p>
     <div
       class='video-grid'
@@ -24,12 +26,11 @@ export default {
   name: 'ClassroomVideoRoom',
   data: () => ({
     roomName: '',
-    roomCode: '',
     peers: {}
   }),
   computed: {
     roomUrl() {
-      return `${process.env.VUE_APP_SERVER_URL}/room/${this.roomCode}`;
+      return `${process.env.VUE_APP_SERVER_URL}/room/${this.$route.params.roomId}`;
     }
   },
   async created() {
