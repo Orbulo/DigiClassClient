@@ -20,7 +20,8 @@
         <br />
         <p>{{ content }}</p>
         <p id="author">
-          Written by: {{ user.name }} (Rep: {{ user.reputation }})
+          <!-- Written by: {{ user.name }} (Rep: {{ user.reputation }}) -->
+          Written by: Yours Truly (Rep: 10)
         </p>
       </div>
     </div>

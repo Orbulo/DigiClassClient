@@ -20,7 +20,7 @@ export default new Vuex.Store({
     classrooms: [],
     chatMessages: [],
     questionAnswers: {},
-    questions: [],
+    questions: [{ upvotes: 1, title: "Question 1", content: "Question 1 Content", userId: "userId1"}],
     userIds: [],
     userMap: {},
     token: '',
