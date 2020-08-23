@@ -28,7 +28,10 @@ export default new Vuex.Store({
   },
   getters: {
     currentClassroom: state => id => {
-      return state.classrooms.filter((classroom) => id === classroom.id)[0];
+      return state.classrooms.find((classroom) => id === classroom.id);
+    },
+    questionById: state => questionId => {
+      return state.questions.find((question) => question.id === questionId);
     },
     questionAnswers: state => questionId => {
       return state.questionAnswers[questionId];
