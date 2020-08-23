@@ -1,5 +1,6 @@
 import axiosInstance from '../axios';
 import { LocalStorage } from 'quasar';
+import Vue from 'vue';
 
 const actions = {
   setToken({ commit }, token) {
@@ -13,6 +14,7 @@ const actions = {
   },
   setCurrentClassroomId({ commit }, classroomId) {
     LocalStorage.set('currentClassroomId', classroomId);
+    Vue.prototype.$socket.emit('connectToClassroom', classroomId);
     commit('SET_CURRENT_CLASSROOM_ID', classroomId);
   },
   setClassrooms({ commit }, classrooms) {
