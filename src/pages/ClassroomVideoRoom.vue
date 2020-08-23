@@ -1,21 +1,18 @@
 <template>
   <div>
-    <h4 class='text-center text-weight-bold'>{{ roomName }}</h4>
-    <div class='text-subtitle2 text-center'>
-      Send the following link to friends for them to join: <br />
-      <p class='text-weight-regular'>{{ roomUrl }}</p>
+    <div style="background-color: #1976D2">
+      <p
+        class="col text-center"
+        style="padding-top: 5px; color: white; font-size: 16px"
+      >
+        <span class="text-weight-bold">
+          Paste the following ID into the Room ID input box on
+          http://localhost:8080/room: </span
+        ><br />
+        {{ $route.params.roomId }}
+      </p>
     </div>
-    <p class='text-center'>
-      <span class='text-weight-bold'>
-        Or tell them to paste the following ID in the Room ID input box on the
-        join room screen:
-      </span><br />
-      {{ $route.params.roomId }}
-    </p>
-    <div
-      class='video-grid'
-      ref='videoGrid'
-    ></div>
+    <div class="video-grid" ref="videoGrid"></div>
   </div>
 </template>
 
@@ -37,13 +34,17 @@ export default {
     const roomId = this.$route.params.roomId;
     // If room doesn't exist, request will fail and peer will not be loaded
     try {
-      const {data} = await this.$axios.get(`rooms/${roomId}`);
-      await this.$loadScript('https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js');
+      const { data } = await this.$axios.get(`rooms/${roomId}`);
+      await this.$loadScript(
+        'https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js'
+      );
       peer = new window.Peer();
 
-      this.sockets.subscribe('userDisconnected', (userId) => {
-        if (this.peers[userId]) this.peers[userId].close()//removes the stream of the person who left
-      })
+      this.sockets.subscribe('userDisconnected', userId => {
+        if (this.peers[userId]) {
+          this.peers[userId].close();
+        } //removes the stream of the person who left
+      });
 
       peer.on('open', id => {
         console.log('meow');
@@ -52,7 +53,10 @@ export default {
 
       this.roomName = data.name;
       this.roomCode = data.code;
-      const myVideo = document.createElement('video')
+      const myVideo = document.createElement('video');
+      myVideo.style.borderStyle = 'solid';
+      myVideo.style.borderColor = '#90ee90';
+      myVideo.style.borderRadius = '25px';
       myVideo.muted = true;
 
       //telling browser that mic and cam are needed
@@ -64,17 +68,17 @@ export default {
       this.addVideoStream(myVideo, stream);
       //allows a user to "pick up" a call and adds their other's video to theirs
       peer.on('call', call => {
-        call.answer(stream)
-        const video = document.createElement('video')
+        call.answer(stream);
+        const video = document.createElement('video');
         call.on('stream', userVideoStream => {
-          this.addVideoStream(video, userVideoStream)
-        })
-      })
+          this.addVideoStream(video, userVideoStream);
+        });
+      });
 
-      this.sockets.subscribe('userConnected', (userId) => {
-        this.connectToNewUser(userId, stream)
-      })
-    } catch(e) {
+      this.sockets.subscribe('userConnected', userId => {
+        this.connectToNewUser(userId, stream);
+      });
+    } catch (e) {
       alert(`Room with id ${roomId} not found.`);
       await this.$router.push('/room');
     }
@@ -83,31 +87,31 @@ export default {
     addVideoStream(video, stream) {
       video.srcObject = stream;
       video.addEventListener('loadedmetadata', () => {
-        video.play()
-      })
+        video.play();
+      });
       this.$refs.videoGrid.append(video);
     },
     connectToNewUser(userId, stream) {
-      const call = peer.call(userId, stream)
-      const video = document.createElement('video')
+      const call = peer.call(userId, stream);
+      const video = document.createElement('video');
       call.on('stream', userVideoStream => {
-        this.addVideoStream(video, userVideoStream)
-      })
+        this.addVideoStream(video, userVideoStream);
+      });
       call.on('close', () => {
-        video.remove()
-      })
+        video.remove();
+      });
       this.peers[userId] = call;
     }
   }
-}
-
+};
 </script>
 
 <style>
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 300px);
-  grid-auto-rows: 300px;
+  grid-template-columns: repeat(750px);
+  grid-auto-rows: 500px;
+  justify-content: center;
 }
 
 video {
