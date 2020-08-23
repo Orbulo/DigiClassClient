@@ -15,8 +15,8 @@ export default {
         email: nanoid(),
         password: nanoid(),
       });
-      this.setToken(token);
-      this.setUserId(userId);
+      this.setToken(data.token);
+      this.setUserId(data.userId);
     }
     await this.$router.push('/classrooms');
   },
