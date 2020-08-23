@@ -12,6 +12,7 @@
     "dev": "quasar dev"
   },
   "dependencies": {
+    "@capacitor/core": "^2.4.0",
     "@quasar/extras": "^1.0.0",
     "aws-amplify": "^3.0.24",
     "aws-amplify-vue": "^2.1.2",
