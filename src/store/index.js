@@ -20,7 +20,7 @@ export default new Vuex.Store({
     classrooms: [],
     chatMessages: [],
     questionAnswers: {},
-    questions: [{ upvotes: 1, title: "Question 1", content: "Question 1 Content", userId: "userId1"}],
+    questions: [],
     userIds: [],
     userMap: {},
     token: '',
@@ -28,7 +28,10 @@ export default new Vuex.Store({
   },
   getters: {
     currentClassroom: state => id => {
-      return state.classrooms.filter((classroom) => id === classroom.id)[0];
+      return state.classrooms.find((classroom) => id === classroom.id);
+    },
+    questionById: state => questionId => {
+      return state.questions.find((question) => question.id === questionId);
     },
     questionAnswers: state => questionId => {
       return state.questionAnswers[questionId];
@@ -40,7 +43,7 @@ export default new Vuex.Store({
           user: state.userMap[question.userId],
         };
       });
-    },
+    }
   },
   mutations,
   actions,

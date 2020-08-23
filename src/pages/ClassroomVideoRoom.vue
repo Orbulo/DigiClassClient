@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="background-color: #1976D2">
+    <div style="background-color: #1976D2" class="column">
       <q-toolbar>
         <q-btn
           flat
@@ -22,22 +22,55 @@
         </p>
       </q-toolbar>
     </div>
+    <div class="q-ma-md items-center column">
+      <div class="text-h6 text-center">Upload a file to Tabulo</div>
+      <p class="text-center">
+        We've integrated with an Tabulo, an online whiteboard app that allows
+        you to effortlessly make edits on the same image with others in
+        real-time!
+      </p>
+      <q-file
+        outlined
+        v-model="file"
+        label="Select an image"
+        accept=".jpg, image/*"
+      />
+      <q-btn
+        v-if="file"
+        class="q-mt-md"
+        label="Upload Image to Tabulo"
+        @click="onUploadClick"
+      />
+    </div>
     <div class="video-grid" ref="videoGrid"></div>
   </div>
 </template>
 
 <script>
 let peer;
+import { mapState } from 'vuex';
+import { nanoid } from 'nanoid';
 
 export default {
   name: 'ClassroomVideoRoom',
   data: () => ({
     roomName: '',
+    file: null,
+    fileUrl: '',
     peers: {}
   }),
   computed: {
+    ...mapState(['currentClassroomId']),
     roomUrl() {
-      return `${process.env.VUE_APP_SERVER_URL}/room/${this.$route.params.roomId}`;
+      return window.location.href;
+    },
+    tabuloUrl() {
+      return `https://tabulo.app/create-with-image?roomCode=${nanoid()}&roomPassword=${nanoid()}&imageUrl=${
+        this.fileUrl
+      }`;
+    },
+    serverUploadUrl() {
+      return `${process.env.VUE_APP_SERVER_URL}/${this.currentClassroomId}/upload`;
     }
   },
   async created() {
@@ -117,6 +150,18 @@ export default {
     },
     backToClassList() {
       this.$router.push('/discussion');
+    },
+    async onUploadClick() {
+      const formData = new FormData();
+      formData.append('file', this.file);
+      const { data } = await this.$axios({
+        method: 'post',
+        url: `classrooms/${this.currentClassroomId}/upload`,
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      this.fileUrl = data.s3URL;
+      window.open(this.tabuloUrl, '_blank');
     }
   }
 };

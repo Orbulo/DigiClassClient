@@ -40,6 +40,12 @@ const actions = {
     await dispatch('populateUser', question.userId);
     commit('ADD_QUESTION', question);
   },
+  async setQuestions({ commit, dispatch }, questions) {
+    commit('CLEAR_QUESTIONS');
+    await Promise.all(questions.map(async(question) => {
+      dispatch('addQuestion', question);
+    }));
+  },
   async addAnswer({ commit }, answer) {
     commit('ADD_ANSWER', answer);
   }

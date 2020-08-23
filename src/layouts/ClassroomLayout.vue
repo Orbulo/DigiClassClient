@@ -55,14 +55,10 @@
             color="light-blue-5"
             text-color="white"
             icon="keyboard_arrow_left"
+            @click="onClick"
             direction="left"
           >
-            <q-fab-action
-              color="light-blue-5"
-              text-color="white"
-              @click="onClick"
-              icon="mail"
-            />
+            <q-fab-action color="light-blue-5" text-color="white" icon="mail" />
             <q-fab-action
               color="light-blue-5"
               text-color="white"

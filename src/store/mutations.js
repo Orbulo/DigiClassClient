@@ -21,6 +21,10 @@ const mutations = {
   },
   ADD_QUESTION(state, question) {
     state.questions.push(question);
+    state.questions.sort((q1, q2) => q1.upvotes - q2.upvotes);
+  },
+  CLEAR_QUESTIONS(state) {
+    state.questions = [];
   },
   ADD_ANSWER(state, answer) {
     if (!state.questionAnswers[answer.questionId]) {
