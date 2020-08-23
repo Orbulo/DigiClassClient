@@ -1,11 +1,11 @@
 <template>
-  <div class="q-pa-md row justify-center absolute-bottom">
+  <div class="q-pa-md row justify-center">
     <div style="width: 100%">
       <q-chat-message
         v-for="(chatMessage, index) in chatMessages"
         :name="userMap[chatMessage.userId].name"
         :text="[chatMessage.message]"
-        :sent='chatMessage.userId === userId'
+        :sent="chatMessage.userId === userId"
         :key="index"
       />
       <q-input
@@ -15,11 +15,7 @@
         @keydown.enter="sendMessage"
       >
         <template v-slot:append>
-          <q-btn
-            flat
-            icon='send'
-            @click='sendMessage'
-          />
+          <q-btn flat icon="send" @click="sendMessage" />
         </template>
       </q-input>
     </div>
@@ -30,29 +26,32 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "ClassroomChat",
+  name: 'ClassroomChat',
   data: () => ({
-    message: ""
+    message: ''
   }),
   computed: {
     ...mapState(['chatMessages', 'userId', 'currentClassroomId', 'userMap']),
-    ...mapGetters(['populatedQuestions']),
+    ...mapGetters(['populatedQuestions'])
   },
   methods: {
     ...mapActions(['addChatMessage']),
     async sendMessage() {
       await this.$axios.post(`classrooms/${this.currentClassroomId}/chat`, {
-        message: this.message,
+        message: this.message
       });
       this.message = '';
     }
   },
   async created() {
-    const { data } = await
-      this.$axios.get(`classrooms/${this.currentClassroomId}/chat`);
-    await Promise.all(data.map(async (chatMessage) => {
-      await this.addChatMessage(chatMessage);
-    }));
+    const { data } = await this.$axios.get(
+      `classrooms/${this.currentClassroomId}/chat`
+    );
+    await Promise.all(
+      data.map(async chatMessage => {
+        await this.addChatMessage(chatMessage);
+      })
+    );
   }
 };
 </script>

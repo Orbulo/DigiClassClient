@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="app-question" flat bordered>
+    <q-card class="app-question" flat bordered @click="openQuestion">
       <q-card-section class="col-5 flex flex-center">
         <q-icon
           name="verified"
@@ -49,6 +49,8 @@
           />
         </q-card-actions>
       </q-card-section>
+
+      <q-img class="col-5" src="https://cdn.quasar.dev/img/parallax2.jpg" />
 
       <q-item>
         <q-item-section class="author">
@@ -118,6 +120,9 @@ export default {
         this.upvoted = true;
         this.currentUpvotes = this.currentUpvotes + 1;
       }
+    },
+    async openQuestion() {
+      console.log('Wants to open this question');
     }
   }
 };
