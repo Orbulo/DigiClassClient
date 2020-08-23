@@ -38,6 +38,27 @@
     <q-page-container>
       <q-page>
         <router-view />
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+          <q-fab
+            color="light-blue-5"
+            text-color="white"
+            icon="keyboard_arrow_left"
+            direction="left"
+          >
+            <q-fab-action
+              color="light-blue-5"
+              text-color="white"
+              @click="onClick"
+              icon="mail"
+            />
+            <q-fab-action
+              color="light-blue-5"
+              text-color="white"
+              @click="onClick"
+              icon="notifications"
+            />
+          </q-fab>
+        </q-page-sticky>
       </q-page>
     </q-page-container>
   </q-layout>
