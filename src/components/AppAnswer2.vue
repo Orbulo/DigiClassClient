@@ -1,19 +1,14 @@
 <template>
   <div>
     <q-card class="app-question" flat bordered>
-      <q-card-section class="col-5 flex flex-center">
-        <q-icon
-          name="verified"
-          color="secondary"
-          size="md"
-          :class="{ 'light-dimmed': !verified }"
-        />
-        <q-item>
-          <q-item-section>
-            <q-item-label>Question Title</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-card-section>
+      <q-item>
+        <q-item-section class="author">
+          <q-item-label>Bob Ross</q-item-label>
+          <q-item-label caption>
+            5 Reputation
+          </q-item-label>
+        </q-item-section>
+      </q-item>
 
       <q-separator />
 
@@ -70,33 +65,23 @@
             flat
             round
             color="secondary"
-            icon="question_answer"
-            :class="{ 'light-dimmed': !answered }"
+            icon="verified"
+            :class="{ 'light-dimmed': !verified }"
           />
         </q-card-actions>
       </q-card-section>
-
-      <q-item>
-        <q-item-section class="author">
-          <q-item-label>Bob Ross</q-item-label>
-          <q-item-label caption>
-            5 Reputation
-          </q-item-label>
-        </q-item-section>
-      </q-item>
     </q-card>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AppQuestion2',
+  name: 'AppAnswer2',
   data() {
     return {
       upvoted: false,
       upvotes: 1,
-      answered: true,
-      verified: false
+      verified: true
     };
   },
   methods: {

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hhh lpr lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -24,10 +24,7 @@
       content-class="bg-grey-1"
     >
       <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
+        <q-item-label header class="text-grey-8">
           Essential Links
         </q-item-label>
         <DrawerLink
@@ -54,17 +51,17 @@ const drawerLinks = [
   {
     title: 'Discussion',
     icon: 'forum',
-    route: '/discussion',
+    route: '/discussion'
   },
   {
     title: 'Questions',
     icon: 'mdi-comment-question',
-    route: '/questions',
+    route: '/questions'
   },
   {
     title: 'Room',
     icon: 'mdi-video',
-    route: '/room',
+    route: '/room'
   }
 ];
 
@@ -74,20 +71,20 @@ export default {
   created() {
     this.$axios.get(`classrooms/${this.currentClassroomId}`);
   },
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
-      drawerLinks,
-    }
+      drawerLinks
+    };
   },
   computed: {
     ...mapState(['currentClassroomId']),
-    ...mapGetters(['currentClassroom']),
+    ...mapGetters(['currentClassroom'])
   },
   sockets: {
     connect() {
       console.log('Socket connected.');
-    },
+    }
   }
-}
+};
 </script>
