@@ -53,7 +53,7 @@
               :class="{ 'light-dimmed': !upvoted }"
               @click="upvote"
             />
-            <h7>{{ upvotes }}</h7>
+            <p>{{ upvotes }}</p>
           </div>
           <q-separator />
 

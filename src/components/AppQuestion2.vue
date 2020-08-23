@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="app-question" flat bordered>
+    <q-card class="app-question" flat bordered @click="openQuestion">
       <q-card-section class="col-5 flex flex-center">
         <q-icon
           name="verified"
@@ -61,7 +61,7 @@
               :class="{ 'light-dimmed': !upvoted }"
               @click="upvote"
             />
-            <h7>{{ upvotes }}</h7>
+            <p>{{ upvotes }}</p>
           </div>
           <q-separator />
 
@@ -113,6 +113,9 @@ export default {
         this.upvoted = true;
         this.upvotes = this.upvotes + 1;
       }
+    },
+    async openQuestion() {
+      console.log('Wants to open this question');
     }
   }
 };
