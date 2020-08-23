@@ -76,7 +76,7 @@
 
 <script>
 export default {
-  name: 'Question',
+  name: 'AppQuestion2',
   data() {
     return {
       upvoted: false,
