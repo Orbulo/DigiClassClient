@@ -10,10 +10,15 @@
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-
         <q-toolbar-title>
           {{ currentClassroom.name }}
         </q-toolbar-title>
+        <q-btn
+          label="logout"
+          color="white"
+          text-color="primary"
+          @click="logout"
+        />
       </q-toolbar>
     </q-header>
 
@@ -105,6 +110,12 @@ export default {
   sockets: {
     connect() {
       console.log('Socket connected.');
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      this.$router.push('login');
     }
   }
 };
