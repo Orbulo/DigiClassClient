@@ -1,0 +1,12 @@
+{
+  "name": "digiclass",
+  "version": "0.0.1",
+  "description": "A digital classroom focused on providing a platform for students to help one another.",
+  "author": "Kevin Xu, Kevin Qu, and Leon Si",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "2.4.0",
+    "@capacitor/cli": "^2.0.0",
+    "@capacitor/core": "^2.0.0"
+  }
+}
