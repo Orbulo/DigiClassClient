@@ -137,10 +137,15 @@ export default {
     },
     async joinClassroom() {
       try {
-        await this.$axios.post('classroom/join', {
+        const { data } = await this.$axios.post('classrooms/join', {
           classroomId: this.classroomId
         });
-        await this.$router.push('/discussion');
+        await this.addClassroom({
+          id: data.id,
+          courseCode: data.courseCode,
+          name: data.name,
+        });
+        this.isCreateClassroomDialogVisible = false;
       } catch (e) {
         this.joinClassError = true;
       }
