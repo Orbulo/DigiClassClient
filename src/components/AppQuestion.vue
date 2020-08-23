@@ -3,20 +3,18 @@
     <div class="row" id="question">
       <div id="voting">
         <template>
-          <q-btn
-            name="mdi-chevron-up"
-            @click='upvote'
-          >
+          <q-btn name="mdi-chevron-up" @click="upvote">
             <template v-slot>
-              <q-icon name='mdi-chevron-up' id='upvote'/>
+              <q-icon name="mdi-chevron-up" id="upvote" />
             </template>
           </q-btn>
-
         </template>
         <q-field borderless id="votes" stack-label>
           <template v-slot:control>
-            <div class="self-center full-width text-center no-outline"
-                 tabindex="0">
+            <div
+              class="self-center full-width text-center no-outline"
+              tabindex="0"
+            >
               <p style="font-size: 15px; margin-bottom: 0">{{ upvotes }}</p>
               <p style="font-size: 10px; margin-bottom: 0">upvotes</p>
             </div>
@@ -40,27 +38,27 @@
 import { mapState } from 'vuex';
 
 export default {
-  name: "AppQuestion",
+  name: 'AppQuestion',
   props: {
     id: {
       type: String,
-      required: true,
+      required: true
     },
     upvotes: {
       type: Number,
-      required: true,
+      required: true
     },
     title: {
       type: String,
-      required: true,
+      required: true
     },
     content: {
       type: String,
-      required: true,
+      required: true
     },
     userId: {
       type: String,
-      required: true,
+      required: true
     }
   },
   computed: {
@@ -71,7 +69,9 @@ export default {
   },
   methods: {
     async upvote() {
-      await this.$axios.post(`classroom/${this.currentClassroomId}/questions/${this.id}/upvote`);
+      await this.$axios.post(
+        `classroom/${this.currentClassroomId}/questions/${this.id}/upvote`
+      );
     }
   }
 };

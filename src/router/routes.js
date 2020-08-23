@@ -1,4 +1,3 @@
-
 const routes = [
   {
     path: '/',
@@ -10,15 +9,15 @@ const routes = [
     children: [
       {
         path: 'room',
-        component: () => import('../pages/ClassroomMeet.vue'),
+        component: () => import('../pages/ClassroomMeet.vue')
       },
       {
         path: 'discussion',
-        component: () => import('../pages/ClassroomDiscussion.vue'),
+        component: () => import('../pages/ClassroomDiscussion.vue')
       },
       {
         path: 'questions',
-        component: () => import('../pages/ClassroomQuestionList.vue'),
+        component: () => import('../pages/ClassroomQuestionList.vue')
       },
       {
         path: 'question/:questionId',
@@ -44,6 +43,11 @@ const routes = [
     name: 'Login',
     component: () => import('../pages/Accounts/Login.vue')
   },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import('../pages/Test.vue')
+  },
 
   // Always leave this as last one,
   // but you can also remove it
@@ -51,6 +55,6 @@ const routes = [
     path: '*',
     component: () => import('pages/Error404.vue')
   }
-]
+];
 
-export default routes
+export default routes;
