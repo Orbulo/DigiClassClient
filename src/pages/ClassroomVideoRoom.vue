@@ -1,16 +1,26 @@
 <template>
   <div>
     <div style="background-color: #1976D2">
-      <p
-        class="col text-center"
-        style="padding-top: 5px; color: white; font-size: 16px"
-      >
-        <span class="text-weight-bold">
-          Paste the following ID into the Room ID input box on
-          http://localhost:8080/room: </span
-        ><br />
-        {{ $route.params.roomId }}
-      </p>
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          icon="mdi-arrow-left"
+          color="white"
+          @click="backToClassList"
+        />
+        <p
+          class="col text-center"
+          style="padding-top: 5px; color: white; font-size: 16px"
+        >
+          <span class="text-weight-bold">
+            Paste the following ID into the Room ID input box on
+            http://localhost:8080/room: </span
+          ><br />
+          {{ $route.params.roomId }}
+        </p>
+      </q-toolbar>
     </div>
     <div class="video-grid" ref="videoGrid"></div>
   </div>
@@ -70,6 +80,9 @@ export default {
       peer.on('call', call => {
         call.answer(stream);
         const video = document.createElement('video');
+        video.style.borderStyle = 'solid';
+        video.style.borderColor = '#90ee90';
+        video.style.borderRadius = '25px';
         call.on('stream', userVideoStream => {
           this.addVideoStream(video, userVideoStream);
         });
@@ -101,6 +114,9 @@ export default {
         video.remove();
       });
       this.peers[userId] = call;
+    },
+    backToClassList() {
+      this.$router.push('/discussion');
     }
   }
 };

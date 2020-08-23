@@ -6,6 +6,13 @@
           flat
           dense
           round
+          icon="mdi-arrow-left"
+          @click="backToClassList"
+        />
+        <q-btn
+          flat
+          dense
+          round
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
@@ -116,6 +123,9 @@ export default {
     logout() {
       localStorage.removeItem('token');
       this.$router.push('login');
+    },
+    backToClassList() {
+      this.$router.push('classrooms');
     }
   }
 };
