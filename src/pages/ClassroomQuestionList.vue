@@ -15,7 +15,6 @@
     />
     <q-dialog
       v-model='isPostQuestionDialogVisible'
-
     >
       <q-card>
         <q-input
