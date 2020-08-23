@@ -1,18 +1,18 @@
 import axiosInstance from '../axios';
-import { SessionStorage } from 'quasar';
+import { LocalStorage } from 'quasar';
 
 const actions = {
   setToken({ commit }, token) {
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    SessionStorage.set('token', token);
+    LocalStorage.set('token', token);
     commit('SET_TOKEN', token);
   },
   setUserId({ commit }, userId) {
     commit('SET_USER_ID', userId);
-    SessionStorage.set('userId', userId);
+    LocalStorage.set('userId', userId);
   },
   setCurrentClassroomId({ commit }, classroomId) {
-    SessionStorage.set('currentClassroomId', classroomId);
+    LocalStorage.set('currentClassroomId', classroomId);
     commit('SET_CURRENT_CLASSROOM_ID', classroomId);
   },
   setClassrooms({ commit }, classrooms) {

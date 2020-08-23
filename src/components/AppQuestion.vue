@@ -3,7 +3,15 @@
     <div class="row" id="question">
       <div id="voting">
         <template>
-          <q-icon name="mdi-chevron-up" id="upvote" />
+          <q-btn
+            name="mdi-chevron-up"
+            @click='upvote'
+          >
+            <template v-slot>
+              <q-icon name='mdi-chevron-up' id='upvote'/>
+            </template>
+          </q-btn>
+
         </template>
         <q-field borderless id="votes" stack-label>
           <template v-slot:control>
@@ -34,6 +42,10 @@ import { mapState } from 'vuex';
 export default {
   name: "AppQuestion",
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     upvotes: {
       type: Number,
       required: true,
@@ -52,9 +64,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userMap']),
+    ...mapState(['userMap', 'currentClassroomId']),
     user() {
       return this.userMap[this.userId];
+    }
+  },
+  methods: {
+    async upvote() {
+      await this.$axios.post(`classroom/${this.currentClassroomId}/questions/${this.id}/upvote`);
     }
   }
 };
