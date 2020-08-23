@@ -60,7 +60,7 @@ const drawerLinks = [
   },
   {
     title: 'Room',
-    route: '/room/create',
+    route: '/room',
   }
 ];
 
