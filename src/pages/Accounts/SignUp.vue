@@ -1,8 +1,17 @@
 <template>
   <q-card class="q-pa-md column items-center">
     <h3 class="text-weight-bold">Register</h3>
-    <q-form>
-      <q-input label="Email" class="q-mb-md q-card" v-model="email" outlined />
+    <q-card class='column items-center'>
+      <q-input
+        label="Email"
+        class="q-mb-md q-card"
+        v-model="email"
+        outlined
+      >
+        <template v-slot:prepend>
+          <q-icon name="email" />
+        </template>
+      </q-input>
       <q-input
         label="Password"
         type="password"
@@ -20,11 +29,14 @@
         label="Register"
         @click="onRegister"
       />
-    </q-form>
+      <router-link to='/login'>Already have an account?</router-link>
+    </q-card>
   </q-card>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: "SignUp",
   data() {
@@ -34,12 +46,16 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['setToken', 'setUserId']),
     async onRegister() {
       const { data } = await this.$axios.post("auth/register", {
         email: this.email,
         password: this.password
       });
-      const token = data.token;
+      const { userId, token } = data;
+      this.setToken(token);
+      this.setUserId(userId);
+      await this.$router.push('/classrooms');
     }
   }
 };

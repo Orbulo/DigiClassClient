@@ -117,6 +117,7 @@ export default {
     async enterClassroom(id) {
       const { data } = await this.$axios.get(`classrooms/${id}`);
       this.setCurrentClassroomId(id);
+      this.$socket.emit('connectToClassroom', id);
       await this.$router.push('/discussion');
     },
     async createClassroom() {

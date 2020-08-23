@@ -1,110 +1,62 @@
 <template>
-  <div class="items-center" style="height:100%; width:100%">
-    <div
-      v-if="!signedIn"
-      class="row items-center justify-center parent"
-      style="height:100%"
-    >
-      <h3 class="text-weight-bold">Login</h3>
+  <q-card class="q-pa-md column items-center">
+    <h3 class="text-weight-bold">Login</h3>
+    <q-card class='column items-center'>
+      <q-input
+        label="Email"
+        class="q-mb-md q-card"
+        v-model="email"
+        outlined
+      >
+        <template v-slot:prepend>
+          <q-icon name="email" />
+        </template>
+      </q-input>
+      <q-input
+        label="Password"
+        type="password"
+        class="q-mb-md q-card"
+        v-model="password"
+        outlined
+      >
+        <template v-slot:prepend>
+          <q-icon name="lock" />
+        </template>
+      </q-input>
+      <q-btn
+        color="primary"
+        class="q-my-md q-card"
+        label="Login"
+        @click="onLogin"
+      />
+      <router-link to='/signup'>Don't have an account?</router-link>
+    </q-card>
+  </q-card>
 
-      <!-- <amplify-authenticator /> -->
-      <q-form class="q-gutter-md q-my-auto">
-        <q-input
-          class="q-card"
-          outlined
-          v-model="email"
-          type="text"
-          name
-          placeholder="Email"
-          lazy-rules
-          :rules="[val => !validEmail('@') || 'Please enter a valid email']"
-        />
-        <q-input
-          class="q-card"
-          outlined
-          v-model="password"
-          type="password"
-          name
-          placeholder="Password"
-        >
-          <template v-slot:prepend>
-            <q-icon name="lock" />
-          </template>
-        </q-input>
-        <q-btn class="q-card" color="primary" @click="signIn" label="Sign In" />
-      </q-form>
-
-      <router-link to="/signup" style="margin-top:20px">
-        Don't have an account?
-      </router-link>
-    </div>
-    <div v-if="signedIn">
-      <q-btn @click="signOut" label="Sign Out" style />
-      <h3>Username: {{ user.username }}</h3>
-    </div>
-  </div>
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
-import { AmplifyEventBus } from "aws-amplify-vue";
+import {mapActions} from 'vuex';
+
 export default {
   name: "Login",
   data() {
     return {
-      signedIn: false,
-      user: null,
       email: "",
       password: ""
     };
   },
-  created() {
-    this.findUser();
-    AmplifyEventBus.$on("authState", info => {
-      console.log("auth", info);
-      if (info === "signedIn") {
-        this.findUser();
-      } else {
-        this.signedIn = false;
-      }
-    });
-  },
   methods: {
-    validEmail(email) {
-      return email.includes("@");
-    },
-    signIn() {
-      Auth.signIn(this.email, this.password)
-        .then(user => {
-          this.signedIn = !!user;
-          this.user = user;
-        })
-        .catch(err => console.log("signIn Error:", err));
-    },
-    signOut() {
-      Auth.signOut()
-        .then(data => {
-          console.log(data);
-          this.signedIn = !!data;
-          this.user = null;
-        })
-        .catch(err => console.log("signOut Error:", err));
-    },
-    async findUser() {
-      try {
-        const user = await Auth.currentAuthenticatedUser();
-        this.user = user;
-        this.signedIn = true;
-        console.log("user", user);
-        const jwt = user
-          .getSignInUserSession()
-          .getIdToken()
-          .getJwtToken();
-        console.log("jwt", jwt);
-      } catch (err) {
-        console.log("Error in findUser", err);
-        this.signedIn = false;
-      }
+    ...mapActions(['setToken', 'setUserId']),
+    async onLogin() {
+      const { data } = await this.$axios.post("auth/login", {
+        email: this.email,
+        password: this.password
+      });
+      const { userId, token } = data;
+      this.setToken(token);
+      this.setUserId(userId);
+      await this.$router.push('/classrooms');
     }
   }
 };

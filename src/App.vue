@@ -13,7 +13,7 @@ export default {
     const token = LocalStorage.getItem('token');
     const userId = LocalStorage.getItem('userId');
     const currentClassroomId = LocalStorage.getItem('currentClassroomId');
-    if (token) {
+    if (token && userId) {
       this.setToken(token);
       this.setUserId(userId);
     }

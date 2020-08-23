@@ -21,7 +21,7 @@ const actions = {
   addClassroom({commit}, {id, code, name}) {
     commit('ADD_CLASSROOM', {id, code, name});
   },
-  async socketChatMessagePosted({ dispatch }, { userId, message }) {
+  async socketChatMessagePosted({ dispatch, state }, { userId, message }) {
     await dispatch('addChatMessage', { userId, message });
   },
   async addChatMessage({ commit, state, dispatch }, { userId, message }) {
