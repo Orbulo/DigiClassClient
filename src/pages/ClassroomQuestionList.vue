@@ -9,7 +9,7 @@
       <AppQuestion2
         v-for="({ upvotes, title, content, userId, id }, index) in questions"
         :id='id'
-        :upvotes="upvotes"
+        :upvotes="+upvotes"
         :title="title"
         :content="content"
         :userId="userId"
@@ -21,7 +21,7 @@
     <q-dialog
       v-model='isPostQuestionDialogVisible'
     >
-      <q-card class='q-pa-md'>
+      <q-card class='q-pa-md column' style='min-width: 80%'>
         <q-input
           outlined
           label='Question Title'
@@ -30,9 +30,8 @@
         />
         <q-editor
           v-model="questionDetails"
-          flat
+          style='border: 1px solid rgba(0, 0, 0, 0.5)'
           placeholder='Provide all the details needed for others to understand your question...'
-          content-class="bg-amber-3"
           toolbar-text-color="white"
           toolbar-toggle-color="yellow-8"
           toolbar-bg="primary"
@@ -49,6 +48,7 @@
       ]"
         />
         <q-btn
+          class='q-mt-md self-center'
           label='Post Question'
           @click='postQuestion'
         />
@@ -75,22 +75,21 @@ export default {
     ...mapState(["currentClassroomId", "questions"]),
   },
   methods: {
-    ...mapActions(['addQuestion']),
+    ...mapActions(['addQuestion', 'setQuestions']),
     async postQuestion() {
       const classroomId = this.currentClassroomId;
       await this.$axios.post(`classrooms/${classroomId}/questions`, {
         title: this.questionTitle,
         content: this.questionDetails,
       });
+      this.isPostQuestionDialogVisible = false;
     }
   },
   async created() {
     const classroomId = this.currentClassroomId;
     const { data: questions } =
       await this.$axios.get(`classrooms/${classroomId}/questions`);
-    await Promise.all(questions.map(async (question) => {
-      await this.addQuestion(question);
-    }));
+    await this.setQuestions(questions);
   }
 };
 </script>

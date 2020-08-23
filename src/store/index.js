@@ -20,7 +20,7 @@ export default new Vuex.Store({
     classrooms: [],
     chatMessages: [],
     questionAnswers: {},
-    questions: [{ upvotes: 1, title: "Question 1", content: "Question 1 Content", userId: "userId1"}],
+    questions: [],
     userIds: [],
     userMap: {},
     token: '',
@@ -43,7 +43,7 @@ export default new Vuex.Store({
           user: state.userMap[question.userId],
         };
       });
-    },
+    }
   },
   mutations,
   actions,
