@@ -53,15 +53,17 @@ import DrawerLink from 'components/DrawerLink';
 const drawerLinks = [
   {
     title: 'Discussion',
-    icon: 'chat',
+    icon: 'forum',
     route: '/discussion',
   },
   {
     title: 'Questions',
+    icon: 'mdi-comment-question',
     route: '/questions',
   },
   {
     title: 'Room',
+    icon: 'mdi-video',
     route: '/room',
   }
 ];
