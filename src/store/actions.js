@@ -12,8 +12,8 @@ const actions = {
     LocalStorage.set('userId', userId);
   },
   setCurrentClassroomId({ commit }, classroomId) {
-    commit('SET_CURRENT_CLASSROOM_ID', classroomId);
     LocalStorage.set('currentClassroomId', classroomId);
+    commit('SET_CURRENT_CLASSROOM_ID', classroomId);
   },
   setClassrooms({ commit }, classrooms) {
     commit('SET_CLASSROOMS', classrooms);
@@ -30,7 +30,7 @@ const actions = {
   },
   async populateUser({ state, commit }, userId) {
     if (!state.userMap[userId]) {
-      const { data: user } = await axiosInstance.get(`classrooms/${this.currentClassroomId}/user/${userId}`);
+      const { data: user } = await axiosInstance.get(`classrooms/${state.currentClassroomId}/user/${userId}`);
       commit('POPULATE_USER', { userId, user });
     }
   },

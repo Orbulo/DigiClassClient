@@ -2,10 +2,10 @@
   <div class="q-pa-md row justify-center absolute-bottom">
     <div style="width: 100%">
       <q-chat-message
-        v-for="(message, index) in chatMessages"
-        :name="users[message.userId]"
-        :text="[message.content]"
-        :sent='message.userId === userId'
+        v-for="(chatMessage, index) in chatMessages"
+        :name="userMap[chatMessage.userId].name"
+        :text="[chatMessage.message]"
+        :sent='chatMessage.userId === userId'
         :key="index"
       />
       <q-input filled v-model="message" label="Enter a Message">
@@ -30,15 +30,13 @@ export default {
     message: ""
   }),
   computed: {
-    ...mapState(['chatMessages', 'userId', 'currentClassroomId']),
+    ...mapState(['chatMessages', 'userId', 'currentClassroomId', 'userMap']),
     ...mapGetters(['populatedQuestions']),
   },
   methods: {
     ...mapActions(['addChatMessage']),
     async sendMessage() {
-      await this.$axios.post(`classrooms/${this.currentClassroomId}/chat`, {
-        message: this.message,
-      });
+      await this.addChatMessage({ userId: this.userId, message: this.message });
       this.message = '';
     }
   },

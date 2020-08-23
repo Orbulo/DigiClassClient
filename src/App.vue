@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { LocalStorage, SessionStorage } from 'quasar';
+import { LocalStorage } from 'quasar';
 import { mapActions } from 'vuex';
 
 export default {
