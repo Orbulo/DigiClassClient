@@ -1,29 +1,42 @@
 <template>
   <div class="items-center" style="height:100%; width:100%">
-    <div v-if="!signedIn" class="row items-center justify-center parent" style="height:100%">
+    <div
+      v-if="!signedIn"
+      class="row items-center justify-center parent"
+      style="height:100%"
+    >
+      <h3 class="text-weight-bold">Login</h3>
+
       <!-- <amplify-authenticator /> -->
       <q-form class="q-gutter-md q-my-auto">
         <q-input
           class="q-card"
-          filled
+          outlined
           v-model="email"
           type="text"
           name
           placeholder="Email"
           lazy-rules
-          :rules="[ val => !validEmail('@') || 'Please enter a valid email']"
+          :rules="[val => !validEmail('@') || 'Please enter a valid email']"
         />
         <q-input
           class="q-card"
-          filled
+          outlined
           v-model="password"
           type="password"
           name
           placeholder="Password"
-        />
+        >
+          <template v-slot:prepend>
+            <q-icon name="lock" />
+          </template>
+        </q-input>
         <q-btn class="q-card" color="primary" @click="signIn" label="Sign In" />
-        <q-btn class="q-card" color="primary" @click="signUp" label="Sign Out" />
       </q-form>
+
+      <router-link to="/signup" style="margin-top:20px">
+        Don't have an account?
+      </router-link>
     </div>
     <div v-if="signedIn">
       <q-btn @click="signOut" label="Sign Out" style />
@@ -42,12 +55,12 @@ export default {
       signedIn: false,
       user: null,
       email: "",
-      password: "",
+      password: ""
     };
   },
   created() {
     this.findUser();
-    AmplifyEventBus.$on("authState", (info) => {
+    AmplifyEventBus.$on("authState", info => {
       console.log("auth", info);
       if (info === "signedIn") {
         this.findUser();
@@ -62,23 +75,20 @@ export default {
     },
     signIn() {
       Auth.signIn(this.email, this.password)
-        .then((user) => {
+        .then(user => {
           this.signedIn = !!user;
           this.user = user;
         })
-        .catch((err) => console.log("signIn Error:", err));
+        .catch(err => console.log("signIn Error:", err));
     },
     signOut() {
       Auth.signOut()
-        .then((data) => {
+        .then(data => {
           console.log(data);
           this.signedIn = !!data;
           this.user = null;
         })
-        .catch((err) => console.log("signOut Error:", err));
-    },
-    signUp() {
-      this.$router.push("/signup");
+        .catch(err => console.log("signOut Error:", err));
     },
     async findUser() {
       try {
@@ -86,14 +96,17 @@ export default {
         this.user = user;
         this.signedIn = true;
         console.log("user", user);
-        const jwt = user.getSignInUserSession().getIdToken().getJwtToken();
+        const jwt = user
+          .getSignInUserSession()
+          .getIdToken()
+          .getJwtToken();
         console.log("jwt", jwt);
       } catch (err) {
         console.log("Error in findUser", err);
         this.signedIn = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
