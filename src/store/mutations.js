@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 const mutations = {
   SET_TOKEN(state, token) {
     state.token = token;
@@ -11,15 +13,24 @@ const mutations = {
   ADD_CLASSROOM(state, classroom) {
     state.classrooms.push(classroom);
   },
+  POPULATE_USER(state, { userId, user }) {
+    Vue.set(state.userMap, userId, user);
+  },
   ADD_CHAT_MESSAGE(state, { message, userId }) {
-
+    state.chatMessages.push({ message, userId });
   },
-  ADD_QUESTION(state, { questionId, userId }) {
-
+  ADD_QUESTION(state, question) {
+    state.questions.push(question);
   },
-  ADD_ANSWER(state, { answerId, userId }) {
-
+  ADD_ANSWER(state, answer) {
+    if (!state.questionAnswers[answer.questionId]) {
+      Vue.set(state.questionAnswers, answer.questionId, []);
+    }
+    state.questionAnswers[answer.questionId].push(answer);
   },
+  SET_USER_ID(state, userId) {
+    state.userId = userId;
+  }
 };
 
 export default mutations;

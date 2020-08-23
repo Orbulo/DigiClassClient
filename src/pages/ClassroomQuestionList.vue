@@ -1,12 +1,19 @@
 <template>
   <div>
-    <AppQuestion />
+    <AppQuestion
+      v-for="({ upvotes, title, content, userId }, index) in questions"
+      :upvotes="upvotes"
+      :title="title"
+      :content="content"
+      :userId="userId"
+      :key="index"
+    />
   </div>
 </template>
 
 <script>
 import AppQuestion from "../components/AppQuestion";
-import { mapState } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "ClassroomQuestionList",
@@ -14,12 +21,18 @@ export default {
     AppQuestion
   },
   computed: {
-    ...mapState(["currentClassroomId"])
+    ...mapState(["currentClassroomId", "questions"]),
   },
-  created() {
+  methods: {
+    ...mapActions(['addQuestion']),
+  },
+  async created() {
     const classroomId = this.currentClassroomId;
-    const { data } = this.$axios.get(`classrooms/${classroomId}/questions`);
-    console.log(data);
+    const { data: questions } =
+      await this.$axios.get(`classrooms/${classroomId}/questions`);
+    await Promise.all(questions.map(async (question) => {
+      await this.addQuestion(question);
+    }));
   }
 };
 </script>

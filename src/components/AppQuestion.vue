@@ -16,26 +16,45 @@
         </q-field>
       </div>
       <div class="col-11">
-        <a href="/questions"><h6>QUESTION TITLE HERE</h6></a>
+        <h6>{{ title }}</h6>
         <br />
-        <p>RANDOM CONTENT</p>
-        <p id="author">Written by: {{ author }}</p>
+        <p>{{ content }}</p>
+        <p id="author">
+          Written by: {{ user.name }} (Rep: {{ user.reputation }})
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: "AppQuestion",
-  data() {
-    return {
-      upvotes: ""
-    };
+  props: {
+    upvotes: {
+      type: Number,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: String,
+      required: true,
+    }
   },
-  created() {
-    this.upvotes = 123;
-    this.author = "ABC";
+  computed: {
+    ...mapState(['userMap']),
+    user() {
+      return this.userMap[this.userId];
+    }
   }
 };
 </script>

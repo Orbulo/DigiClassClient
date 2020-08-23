@@ -2,21 +2,19 @@
   <div class="q-pa-md row justify-center absolute-bottom">
     <div style="width: 100%">
       <q-chat-message
-        name="me"
-        avatar="https://cdn.quasar.dev/img/avatar4.jpg"
-        :text="['hey, how are you?']"
-        sent
-        stamp="7 minutes ago"
+        v-for="(chatMessage, index) in chatMessages"
+        :name="userMap[chatMessage.userId].name"
+        :text="[chatMessage.message]"
+        :sent='chatMessage.userId === userId'
+        :key="index"
       />
-      <q-chat-message
-        name="Jane"
-        avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-        :text="[`doing fine, how r you?`]"
-        stamp="4 minutes ago"
-      />
-      <q-input filled v-model="newMessage" label="Enter a Message">
+      <q-input filled v-model="message" label="Enter a Message">
         <template v-slot:append>
-          <q-icon name="send" />
+          <q-btn
+            flat
+            icon='send'
+            @click='sendMessage'
+          />
         </template>
       </q-input>
     </div>
@@ -24,13 +22,30 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from 'vuex';
+
 export default {
   name: "ClassroomChat",
   data: () => ({
-    chatMessages: [],
-    newMessage: ""
+    message: ""
   }),
-  created() {
+  computed: {
+    ...mapState(['chatMessages', 'userId', 'currentClassroomId', 'userMap']),
+    ...mapGetters(['populatedQuestions']),
+  },
+  methods: {
+    ...mapActions(['addChatMessage']),
+    async sendMessage() {
+      await this.addChatMessage({ userId: this.userId, message: this.message });
+      this.message = '';
+    }
+  },
+  async created() {
+    const { data } = await
+      this.$axios.get(`classrooms/${this.currentClassroomId}/chat`);
+    await Promise.all(data.map(async (chatMessage) => {
+      await this.addChatMessage(chatMessage);
+    }));
   }
 };
 </script>

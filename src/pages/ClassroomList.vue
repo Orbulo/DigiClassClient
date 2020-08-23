@@ -23,41 +23,37 @@
           >
             <img src="https://cdn.quasar.dev/img/mountains.jpg" />
             <q-card-section>
-              <div class='text-h6'>{{ classroom.name }}</div>
-              <div class='text-subtitle2'>{{ classroom.courseCode }}</div>
+              <div class='text-h6 q-mb-xs'>{{ classroom.name }}</div>
+              <div class='text-subtitle1'>
+                <span class='text-weight-bold'>Course Code:</span>
+                {{ classroom.courseCode }}
+              </div>
+              <div class='q-mt-sm'>
+                <span class='text-weight-bold'>Classroom ID:</span>
+                {{ classroom.id }}
+              </div>
             </q-card-section>
           </q-card>
         </div>
 
         <q-dialog v-model='isCreateClassroomDialogVisible'>
-          <q-card class='column items-stretch q-pa-md'>
-            <q-tab-panels>
-              <q-tab-panel name='join'>
-                <div class='text-h4 q-mb-md'>Create Classroom</div>
-                <q-input
-                  outlined
-                  placeholder="Mr. Xu's Biology Class"
-                  v-model='classroomName'
-                  class='q-mb-md'
-                />
-                <q-input
-                  outlined
-                  placeholder='BIO3D7'
-                  v-model='courseCode'
-                />
-                <q-btn
-                  class='q-mx-auto q-mt-md'
-                  label='Create Classroom'
-                  @click='createClassroom'
-                />
-              </q-tab-panel>
-              <q-tab-panel name='create'>
+          <q-card class='column items-stretch'>
+            <q-tabs
+              v-model='currentPanel'
+              dense
+            >
+              <q-tab name='join' label='Join' />
+              <q-tab name='create' label='Create' />
+            </q-tabs>
+            <q-tab-panels v-model='currentPanel' class='q-pa-md column'>
+              <q-tab-panel name='join' class='items-center column'>
                 <div class='text-h4 q-mb-md'>Join Classroom</div>
                 <q-input
                   label='Classroom ID'
                   outlined
                   v-model='classroomId'
                   bottom-slots
+                  @input='joinClassError = false'
                   :error-message="`Classroom with ID ${classroomId} not found.`"
                   :error='joinClassError'
                 />
@@ -65,6 +61,27 @@
                   class='q-mx-auto q-mt-md'
                   label='Join Classroom'
                   @click='joinClassroom'
+                />
+              </q-tab-panel>
+              <q-tab-panel name='create' class='items-center column'>
+                <div class='text-h4 q-mb-md'>Create Classroom</div>
+                <q-input
+                  outlined
+                  label='Class Name'
+                  placeholder="Mr. Xu's Biology Class"
+                  v-model='classroomName'
+                  class='q-mb-md'
+                />
+                <q-input
+                  outlined
+                  label='Course Code'
+                  placeholder='BIO3D7'
+                  v-model='courseCode'
+                />
+                <q-btn
+                  class='q-mx-auto q-mt-md'
+                  label='Create Classroom'
+                  @click='createClassroom'
                 />
               </q-tab-panel>
             </q-tab-panels>
@@ -86,6 +103,7 @@ export default {
     classroomId: '',
     courseCode: '',
     joinClassError: false,
+    currentPanel: 'join',
   }),
   async created() {
     const { data } = await this.$axios.get('classrooms');
@@ -114,9 +132,14 @@ export default {
       this.isCreateClassroomDialogVisible = false;
     },
     async joinClassroom() {
-      const { data } = await this.$axios.post('classroom/join', {
-        classroomId: this.classroomId
-      })
+      try {
+        await this.$axios.post('classroom/join', {
+          classroomId: this.classroomId
+        });
+        await this.$router.push('/discussion');
+      } catch(e) {
+        this.joinClassError = true;
+      }
     }
   }
 }
