@@ -1,4 +1,4 @@
-import { LocalStorage } from 'quasar';
+import { SessionStorage } from 'quasar';
 import {mapActions} from 'vuex';
 import { nanoid } from 'nanoid';
 
@@ -7,8 +7,8 @@ export default {
     ...mapActions(['setToken', 'setUserId']),
   },
   async created() {
-    const token = LocalStorage.getItem('token');
-    const userId = LocalStorage.getItem('userId');
+    const token = SessionStorage.getItem('token');
+    const userId = SessionStorage.getItem('userId');
     if (!token) {
       // TODO: Redirect user to login/register screen
       const {data} = await this.$axios.post('auth/register', {

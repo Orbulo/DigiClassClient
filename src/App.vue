@@ -4,15 +4,15 @@
   </div>
 </template>
 <script>
-import { LocalStorage } from 'quasar';
+import { SessionStorage } from 'quasar';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   created() {
-    const token = LocalStorage.getItem('token');
-    const userId = LocalStorage.getItem('userId');
-    const currentClassroomId = LocalStorage.getItem('currentClassroomId');
+    const token = SessionStorage.getItem('token');
+    const userId = SessionStorage.getItem('userId');
+    const currentClassroomId = SessionStorage.getItem('currentClassroomId');
     if (token) {
       this.setToken(token);
       this.setUserId(userId);
