@@ -18,10 +18,10 @@ const actions = {
   setClassrooms({ commit }, classrooms) {
     commit('SET_CLASSROOMS', classrooms);
   },
-  addClassroom({commit}, {id, code, name}) {
-    commit('ADD_CLASSROOM', {id, code, name});
+  addClassroom({commit}, {id, courseCode, name}) {
+    commit('ADD_CLASSROOM', {id, courseCode, name});
   },
-  async socketChatMessagePosted({ dispatch }, { userId, message }) {
+  async socketChatMessagePosted({ dispatch, state }, { userId, message }) {
     await dispatch('addChatMessage', { userId, message });
   },
   async addChatMessage({ commit, state, dispatch }, { userId, message }) {

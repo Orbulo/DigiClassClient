@@ -36,7 +36,9 @@ export default {
   methods: {
     ...mapActions(['addChatMessage']),
     async sendMessage() {
-      await this.addChatMessage({ userId: this.userId, message: this.message });
+      await this.$axios.post(`classrooms/${this.currentClassroomId}/chat`, {
+        message: this.message,
+      });
       this.message = '';
     }
   },
