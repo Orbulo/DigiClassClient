@@ -50,8 +50,6 @@
         </q-card-actions>
       </q-card-section>
 
-      <q-img class="col-5" src="https://cdn.quasar.dev/img/parallax2.jpg" />
-
       <q-item>
         <q-item-section class="author">
           <q-item-label>{{ user.name }}</q-item-label>
